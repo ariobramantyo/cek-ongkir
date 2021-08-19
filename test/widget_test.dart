@@ -5,26 +5,19 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'dart:convert';
 
-import 'package:cek_ongkir/main.dart';
+import 'package:cek_ongkir/models/province.dart';
+import 'package:cek_ongkir/utility.dart';
+import 'package:http/http.dart' as http;
 
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+void main() async {
+  Uri url = Uri.parse('https://api.rajaongkir.com/starter/province');
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  var response = await http.get(url, headers: {'key': Utils.apiKey});
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  List<dynamic> data = jsonDecode(response.body)['rajaongkir']['results'];
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+  List<Province> listProvince = data.map((e) => Province.fromMap(e)).toList();
+  print(listProvince[0].province);
 }
