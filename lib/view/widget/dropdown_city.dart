@@ -26,22 +26,37 @@ class DropdownCity extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           )),
       onFind: (_) async {
-        return await ApiService().getCity(provinceId);
+        return await ApiService.getCity(provinceId);
       },
+      showSearchBox: true,
+      searchBoxDecoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 25,
+        ),
+        hintText: "cari kota/kabupaten...",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+      ),
       itemAsString: (City city) {
-        return city.cityName;
+        return '${city.type} ${city.cityName}';
       },
       onChanged: (City? data) {
         if (data != null) {
           if (type == 'asal') {
+            ongkirController.sourceCityId.value = data.cityId;
             ongkirController.sourceCityIsSelected.value = true;
           } else {
+            ongkirController.destinationCityId.value = data.cityId;
             ongkirController.destinationCityIsSelected.value = true;
           }
         } else {
           if (type == 'asal') {
+            ongkirController.sourceCityId.value = '0';
             ongkirController.sourceCityIsSelected.value = false;
           } else {
+            ongkirController.destinationCityId.value = '0';
             ongkirController.destinationCityIsSelected.value = false;
           }
         }

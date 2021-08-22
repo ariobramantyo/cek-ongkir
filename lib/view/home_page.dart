@@ -7,8 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
-  // const HomePage({Key? key}) : super(key: key);
-
   final ongkirController = Get.put(OngkirController());
 
   bool allSelected() {
@@ -23,8 +21,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF3F5F7),
       appBar: AppBar(
+        backgroundColor: Color(0xFF3EBACE),
         title: Text('Cek Ongkir'),
+        // centerTitle: true,
       ),
       body: SafeArea(
         child: ListView(
@@ -142,18 +143,24 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-                onPressed: () {
-                  if (allSelected()) {
-                    Get.snackbar('Berhassil',
-                        'Cek ongkir berhasil semua data berhasil terinput',
-                        snackPosition: SnackPosition.BOTTOM);
-                  } else {
-                    Get.snackbar(
-                        'Gagal', 'Cek ongkir gagal, pastikan semua data terisi',
-                        snackPosition: SnackPosition.BOTTOM);
-                  }
-                },
-                child: Text('Cek ongkir')),
+              onPressed: () async {
+                if (allSelected()) {
+                  ongkirController.cekOngkir();
+                } else {
+                  Get.snackbar(
+                      'Gagal', 'Cek ongkir gagal, pastikan semua data terisi',
+                      snackPosition: SnackPosition.TOP);
+                }
+              },
+              child: Text('Cek ongkir'),
+              style: ElevatedButton.styleFrom(
+                textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                primary: Color(0xFF3EBACE),
+                fixedSize: Size(double.infinity, 45),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+              ),
+            ),
             // Obx(() {
             //   // if (ongkirController.sourceProvinceIsSelected.value &&
             //   //     ongkirController.sourceCityIsSelected.value &&

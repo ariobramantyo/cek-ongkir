@@ -24,11 +24,22 @@ class DropdownProvince extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           )),
       onFind: (_) async {
-        return await ApiService().getProvince();
+        return await ApiService.getProvince();
       },
       itemAsString: (Province province) {
         return province.province;
       },
+      showSearchBox: true,
+      searchBoxDecoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 25,
+        ),
+        hintText: "cari provinsi...",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+      ),
       onChanged: (Province? data) {
         if (data != null) {
           if (type == 'asal') {
